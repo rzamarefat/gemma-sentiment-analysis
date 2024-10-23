@@ -1,7 +1,7 @@
 import ComponentA from '../components/ComponentA'
 
 
-const PageA = () => {
+const MainPage = () => {
     return (
         <>
             <h1>Page A</h1>
@@ -10,4 +10,4 @@ const PageA = () => {
     )
 }
 
-export default PageA
+export default MainPage

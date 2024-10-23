@@ -115,15 +115,16 @@ class GemmaSentiment:
 
         trainer.train()
 
-    def evaluate(self, data):
-        contents = data["contents"]
-        labels = data["labels"]
+    def evaluate(self, test_df):
+        test_ds = Dataset.from_pandas(test_df)
 
         y_pred = []
         y_gt = []
 
         
-        for c,l in tqdm(zip(contents, labels), total=len(contents)):
+        for data in tqdm(test_ds, total=len(test_ds)):
+            c = data["content"]
+            l = data["label"]
             predicted_label = self.infer(c)
             if predicted_label is None:
                 print("WTF!!!!")
@@ -138,43 +139,3 @@ class GemmaSentiment:
         print(f"Accuracy: {accuracy}")
         print(f"Precision: {precision}")
         print(f"Recall: {recall}")
-            
-
-
-
-if __name__ == "__main__":
-
-    # eval
-    print("before finetuning")
-    path_to_model = r"C:\Users\ASUS\Desktop\github_projects\gemma-sent-analysis\weights"
-    model = GemmaSentiment(path_to_model=path_to_model, device="cuda")
-    import pandas as pd
-    eval_df = pd.read_csv(r"C:\Users\ASUS\Desktop\github_projects\gemma-sent-analysis\SYNTH_TEST_SENT_DATA_3_CLASSES.csv")
-    eval_data = {
-        "contents": eval_df["content"].tolist(),
-        "labels": eval_df["label"].tolist()
-    }
-    model.evaluate(eval_data)
-
-
-    print("after finetuning")
-    path_to_model = r"C:\Users\ASUS\Desktop\github_projects\gemma-sent-analysis\outputs\checkpoint-224"
-    model = GemmaSentiment(path_to_model=path_to_model, device="cuda")
-    import pandas as pd
-    eval_df = pd.read_csv(r"C:\Users\ASUS\Desktop\github_projects\gemma-sent-analysis\SYNTH_TEST_SENT_DATA_3_CLASSES.csv")
-    eval_data = {
-        "contents": eval_df["content"].tolist(),
-        "labels": eval_df["label"].tolist()
-    }
-    model.evaluate(eval_data)
-
-
-
-    # fine-tune
-    # import pandas as pd
-    # train_df = pd.read_csv(r"C:\Users\ASUS\Desktop\github_projects\gemma-sent-analysis\SYNTH_TRAIN_SENT_DATA_3_CLASSES.csv")
-    # model.train(train_df)
-
-
-
-
