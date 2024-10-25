@@ -1,11 +1,10 @@
-import ComponentA from '../components/ComponentA'
+import UserInput from '../components/UserInput'
 
 
 const MainPage = () => {
     return (
         <>
-            <h1>Page A</h1>
-            <ComponentA/>
+            <UserInput />
         </>
     )
 }

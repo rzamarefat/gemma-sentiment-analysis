@@ -1,16 +1,12 @@
 import initialState from "./initiaState"
-import { INCREMENT, DECREMENT } from "./actionTypes";
+import { SET_USER_INPUT } from "./actionTypes";
 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case INCREMENT:
+        case SET_USER_INPUT:
             return {
-                ...state, initialValue: state.initialValue + 1
-            }
-        case DECREMENT:
-            return {
-                ...state, initialValue : state.initialValue - 1
+                ...state, userInput: action.payload
             }
 
         default:

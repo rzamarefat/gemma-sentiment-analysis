@@ -1,14 +1,9 @@
-import {INCREMENT, DECREMENT} from './actionTypes'
+import {SET_USER_INPUT} from './actionTypes'
 
 
-export const Increment = () => {
+export const setUserInput = (userInputData) => {
     return {
-        type: INCREMENT,
-    }
-}
-
-export const Decrement = () => {
-    return {
-        type: DECREMENT,
+        type: SET_USER_INPUT,
+        payload: userInputData
     }
 }
