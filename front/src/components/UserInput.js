@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setUserInput } from "../redux/actions";
+import { setSentiment, setUserInput } from "../redux/actions";
 
 const UserInput = () => {
     const userInput = useSelector(state => state.userInput)
     const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
+        let predictedSentiment = null
+
         e.preventDefault();
         try {
           const response = await fetch('http://127.0.0.1:5000/submit', {
@@ -16,7 +18,17 @@ const UserInput = () => {
             body: JSON.stringify({ text: userInput }),
           });
           const data = await response.json();
-          console.log(data)
+        
+          if (data["sentiment"] == 0){
+            predictedSentiment = "Neutral"
+          }else if (data["sentiment"] == 1){
+            predictedSentiment = "Positive"
+          }else {
+            predictedSentiment = "Negative"
+          }
+          
+          dispatch(setSentiment(predictedSentiment))
+          console.log(data["sentiment"])
           
         } catch (error) {
           console.error('Error:', error);

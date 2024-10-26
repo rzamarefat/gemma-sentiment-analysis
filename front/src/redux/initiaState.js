@@ -1,5 +1,6 @@
 const initialState = {
-    "userInput": ""
+    "userInput": "",
+    "sentiment": null
 }
 
 
